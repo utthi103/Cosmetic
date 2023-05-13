@@ -68,7 +68,7 @@
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="200 000"
-                            android:textColor="@color/purple_700" />
+                            android:textColor="#009688" />
 
                     </LinearLayout>
 

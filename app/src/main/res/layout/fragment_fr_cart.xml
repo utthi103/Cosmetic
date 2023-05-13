@@ -53,7 +53,7 @@
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
                 android:layout_marginLeft="30dp"
-                android:background="@color/purple_200"
+                android:background="#009688"
                 />
             <ImageButton
                 android:layout_width="50dp"
@@ -62,7 +62,7 @@
                 android:layout_gravity="center"
                 android:scaleType="fitXY"
                 android:layout_marginLeft="-22dp"
-                android:background="@color/purple_200"
+                android:background="#009688"
                 />
 
         </LinearLayout>
