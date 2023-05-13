@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".admin.insertsp">
+
+    <EditText
+        android:id="@+id/ten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="ten"/>
+
+    <EditText
+        android:id="@+id/gia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="gia"/>
+
+    <EditText
+        android:id="@+id/soluong"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="soluong"/>
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="95dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/mau"
+        />
+
+    <Button
+        android:id="@+id/pickimage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="insert_image"
+        android:text="image" />
+
+    <EditText
+        android:id="@+id/id_danhmuc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="id_danhmuc"/>
+
+    <EditText
+        android:id="@+id/nhacungcap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="nha cung cap"/>
+
+    <EditText
+        android:id="@+id/mota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="mota"/>
+
+    <EditText
+        android:id="@+id/soluongdaban"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:text="soluongdaban" />
+
+    <EditText
+        android:id="@+id/ngay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:height="50dp"
+        android:hint="ngay"/>
+
+    <Button
+        android:id="@+id/btnsave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
+
+    />
+</LinearLayout>
