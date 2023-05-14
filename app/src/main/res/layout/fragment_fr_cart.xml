@@ -47,6 +47,7 @@
                 />
 
             <ImageButton
+                android:id="@+id/payment1"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@drawable/icon_next"
@@ -54,8 +55,10 @@
                 android:scaleType="fitXY"
                 android:layout_marginLeft="30dp"
                 android:background="#009688"
+                android:onClick="payment"
                 />
             <ImageButton
+                android:id="@+id/payment2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:src="@drawable/icon_next"
@@ -63,6 +66,7 @@
                 android:scaleType="fitXY"
                 android:layout_marginLeft="-22dp"
                 android:background="#009688"
+                android:onClick="payment"
                 />
 
         </LinearLayout>
