@@ -289,4 +289,8 @@ class Fr_home : Fragment() {
             }
         })
     }
+
+    companion object {
+        fun newInstance(): Fr_home= Fr_home()
+    }
 }

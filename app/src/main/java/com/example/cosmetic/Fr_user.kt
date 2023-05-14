@@ -226,6 +226,10 @@ class Fr_user : Fragment() {
         }
     }
 
+    companion object {
+        fun newInstance(): Fr_user = Fr_user()
+    }
+
 }
 
 

@@ -26,6 +26,7 @@ class Fr_cart : Fragment() {
     private var binding: FragmentFrCartBinding? = null
     private lateinit var cart1: ArrayList<cart>
     private lateinit var dpRef: DatabaseReference
+    private var  total= BigDecimal.ZERO
 
     @SuppressLint("SuspiciousIndentation")
     private lateinit var sharedPreferences: SharedPreferences
@@ -59,7 +60,7 @@ class Fr_cart : Fragment() {
     }
 
     private fun totalPrice() {
-        var total = BigDecimal.ZERO
+//         var total = BigDecimal.ZERO
         dpRef = FirebaseDatabase.getInstance().getReference("cart")
         val sharedPreferences =
             context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -81,6 +82,7 @@ class Fr_cart : Fragment() {
 
                     val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
                     val formattedPrice = numberFormat.format(total)
+
                     binding?.total?.text = formattedPrice
                 }
 
@@ -132,9 +134,15 @@ class Fr_cart : Fragment() {
 
     fun payment() {
         val intent = Intent(requireActivity(), Payment::class.java)
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+        intent.putExtra("total", numberFormat.format(total))
         startActivity(intent)
         requireActivity().finish()
 
+    }
+
+    companion object {
+        fun newInstance(): Fr_cart = Fr_cart()
     }
 }
 
