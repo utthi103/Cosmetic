@@ -58,11 +58,8 @@ class Fr_user : Fragment() {
             requireActivity().getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
 //        Edit profile
         binding!!.editprofile.setOnClickListener {
-//            supportFragmentManager.beginTransaction().apply {
-//                replace(R.id.fragment_container, BlogFragment.newInstance())
-//                addToBackStack(null)
-//                commit()
-//            }
+            val intent = Intent(requireContext(), editProfile::class.java)
+            startActivity(intent)
 
         }
 //        Change Picture
@@ -72,7 +69,18 @@ class Fr_user : Fragment() {
         check_image()
 //        load name
         setname()
-
+//        changePass
+        binding!!.changePass.setOnClickListener {
+            val intent = Intent(requireContext(), Change_pass::class.java)
+//            intent.putExtra("key", "value")
+            startActivity(intent)
+        }
+//historyOrder
+        binding!!.hisOrder.setOnClickListener {
+            val intent = Intent(requireContext(), historyOrder::class.java)
+            startActivity(intent)
+//            thongbao("xsd")
+        }
 //        logout
         binding!!.logout.setOnClickListener {
 
@@ -117,8 +125,7 @@ class Fr_user : Fragment() {
         })
 
     }
-
-    private fun check_image() {
+    fun check_image() {
         val sharedPreferences = context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         val iduser = sharedPreferences?.getString("iduser",null)
         dpRef = FirebaseDatabase.getInstance().getReference("user").child(iduser.toString())

@@ -68,6 +68,7 @@ class cartAdapter(private val cart:ArrayList<cart>,private val context: Context)
                         builder.setMessage("Bạn có chắc chắn muốn xóa không?")
             builder.setPositiveButton("Đồng ý") { dialog, which ->
                 deleteProduct(idCart = cur.id_cart.toString(), iduser.toString())
+                notifyDataSetChanged()
             }
         builder.setNegativeButton("Hủy bỏ") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"

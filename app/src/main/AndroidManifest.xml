@@ -12,6 +12,18 @@
         android:theme="@style/Theme.Cosmetic"
         tools:targetApi="31">
         <activity
+            android:name=".detailOrder"
+            android:exported="false" />
+        <activity
+            android:name=".historyOrder"
+            android:exported="false" />
+        <activity
+            android:name=".editProfile"
+            android:exported="false" />
+        <activity
+            android:name=".Change_pass"
+            android:exported="false" />
+        <activity
             android:name=".Payment"
             android:exported="false" />
         <activity

@@ -3,18 +3,33 @@ package com.example.cosmetic
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.cosmetic.Model.cart
+import com.example.cosmetic.Model.order
+import com.example.cosmetic.Model.orderDetail
 import com.example.cosmetic.Model.user
+import com.example.cosmetic.adapter.cartAdapter
 import com.example.cosmetic.databinding.ActivityMainBinding
 import com.example.cosmetic.databinding.ActivityPaymentBinding
+import com.example.cosmetic.db.countProduct
 import com.google.firebase.database.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class Payment : AppCompatActivity() {
     private lateinit var binding: ActivityPaymentBinding
+    private lateinit var dpRef1: DatabaseReference
     private lateinit var dpRef: DatabaseReference
+    private lateinit var dpRef2: DatabaseReference
+    private lateinit var dpRef3: DatabaseReference
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaymentBinding.inflate(layoutInflater)
@@ -23,9 +38,79 @@ class Payment : AppCompatActivity() {
             val intent = Intent(this, Fr_cart::class.java)
             startActivity(intent)
         }
-
+            binding.btnPay.setOnClickListener {
+                order()
+            }
         setdata()
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun order() {
+        val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val iduser = sharedPreferences.getString("iduser",null)
+        dpRef  = FirebaseDatabase.getInstance().getReference("cart").child(iduser.toString())
+
+        val phone = binding.etPhoneNumber.text
+        val username = binding.etUserName.text
+        val address = binding.etAddress.text
+        val note = binding.etNote.text
+        val email = binding.etGmail.text
+//        date
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
+        val date = currentDateTime.format(formatter)
+
+        dpRef1 =  FirebaseDatabase.getInstance().getReference("order")
+        dpRef2 =  FirebaseDatabase.getInstance().getReference("orderDetail")
+        val total = intent.getStringExtra("total")
+
+        val id_order = dpRef1.push().key!!
+
+//        order_detail
+        dpRef2 = FirebaseDatabase.getInstance().getReference("cart")
+        dpRef3 = FirebaseDatabase.getInstance().getReference("orderDetail")
+
+        if (iduser != null) {
+            val idUser = sharedPreferences.getString("iduser", "").toString()
+            val query = dpRef2.child(idUser).orderByChild("id_cart")
+            var countProduct = 0
+
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if (snapshot.exists()) {
+                        for (cartSnap in snapshot.children) {
+                            val cartData = cartSnap.getValue(cart::class.java)
+                            if (cartData != null) {
+                                countProduct += cartData.soluong!!
+                            }
+                            val orderdetailDpref =  dpRef3.push()
+                            val orderDetail = orderDetail(id_order,cartData?.id_SP, cartData?.name,
+                                cartData?.soluong?.toInt(),
+                                cartData?.giaSP?.times(cartData?.soluong!!), cartData?.image.toString()
+                            )
+                            orderdetailDpref.setValue(orderDetail)
+                        }
+
+                    }
+                    val orderr = order(id_order,iduser,email.toString(),phone.toString(),address.toString(),
+                        username.toString(),note.toString(),
+                        total, countProduct
+                        ,date)
+                    dpRef1.child(id_order).setValue(orderr)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle errors here
+                }
+            })
+        }
+dpRef.removeValue()
+
+
+    }
+
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Thông báo")
@@ -50,8 +135,8 @@ class Payment : AppCompatActivity() {
                     binding.etGmail.setText(user?.email.toString())
                     binding.etAddress.setText(user?.address.toString())
                     binding.etPhoneNumber.setText(user?.phone.toString())
-
                     binding.total.setText(  intent.getStringExtra("total"))
+
                 }
 
 

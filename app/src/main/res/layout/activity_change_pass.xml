@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".editProfileFragment">
+    tools:context=".Change_pass">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_view"
@@ -36,85 +36,64 @@
         android:id="@+id/lL">
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/usernameTil"
+            android:id="@+id/curPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Your username"
+            android:hint="Current Password"
             android:padding="4dp"
             >
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/usernameEt"
+                <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/curPasset"
+                android:layout_marginTop="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:drawablePadding="10dp"
                 android:textSize="16sp"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addressTil"
+            android:id="@+id/newPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Your address"
+            android:hint="New Password"
             android:padding="4dp"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addressEt"
+                android:id="@+id/newPasset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:drawablePadding="10dp"
                 android:textSize="16sp"
-                android:inputType="textPersonName"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneTil"
+            android:id="@+id/confirmPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:hint="Your phone number"
+            android:hint="Confirm Password"
             android:padding="4dp"
             >
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEt"
+                android:id="@+id/confPasset"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:drawablePadding="10dp"
                 android:textSize="16sp"
-                android:inputType="numberDecimal"
+                android:inputType="textPassword"
                 />
         </com.google.android.material.textfield.TextInputLayout>
-        <LinearLayout
-            android:layout_marginTop="10dp"
-            android:padding="4dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Change your password?"
-                />
-            <TextView
-                android:id="@+id/changePasswordTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Click here!"
-                android:layout_marginHorizontal="10dp"
-                android:textStyle="bold"
-                />
-        </LinearLayout>
+
     </LinearLayout>
 
     <Button
@@ -123,9 +102,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/lL"
         android:text="Save"
-        android:backgroundTint="#D231ED"
+        android:backgroundTint="#009688"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
         />
-
 </RelativeLayout>

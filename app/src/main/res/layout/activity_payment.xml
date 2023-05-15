@@ -76,6 +76,19 @@
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
         android:layout_marginTop="16dp"/>
+    <EditText
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/et_note"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="Enter your note"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black"
+        android:textSize="18sp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="16dp"/>
 
 
     <LinearLayout
@@ -121,7 +134,7 @@
         android:paddingEnd="16dp"
         android:paddingBottom="12dp"
         android:stateListAnimator="@null"
-        android:text="Pay Now"
+        android:text="Order"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="18sp" />

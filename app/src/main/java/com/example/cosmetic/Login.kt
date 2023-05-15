@@ -76,11 +76,8 @@ class Login : AppCompatActivity() {
         builder.setTitle("Thông báo")
         builder.setMessage(thongbao)
         builder.setPositiveButton("Đồng ý") { dialog, which ->
-            // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
+
         builder.show()
     }
 }

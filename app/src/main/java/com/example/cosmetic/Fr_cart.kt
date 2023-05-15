@@ -101,12 +101,13 @@ class Fr_cart : Fragment() {
         if (iduser != null) {
             val idUser = sharedPreferences.getString("iduser", "").toString()
             val query = dpRef.child(idUser).orderByChild("id_cart")
-            query.addValueEventListener(object : ValueEventListener {
+            query.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     cart1.clear()
                     if (snapshot.exists()) {
                         for (cartSnap in snapshot.children) {
                             val cartData = cartSnap.getValue(cart::class.java)
+
                             cart1.add(cartData!!)
                         }
 //                        Toast.makeText(context, cart1.size.toString(), Toast.LENGTH_SHORT).show()
