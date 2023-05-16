@@ -2,27 +2,21 @@ package com.example.cosmetic
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cosmetic.adapter.sanphamAdapter
 import com.example.cosmetic.Model.Sanpham
 import com.example.cosmetic.Model.danhmucSP
-import com.example.cosmetic.Model.user
 import com.example.cosmetic.adapter.SlideShow
 import com.example.cosmetic.adapter.categoryAdapter
 import com.example.cosmetic.databinding.FragmentFrHomeBinding
@@ -88,22 +82,11 @@ class Fr_home : Fragment() {
         builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
+
         builder.show()
     }
 
     private fun filterList(query: String) {
-//        if (query.isNotBlank()) { // Kiểm tra query có độ dài > 0
-//            val fiterList = ArrayList<Sanpham>()
-//            for (item in sanpham) {
-//                item.TenSP?.toLowerCase(Locale.ROOT)?.let {
-//                    if (it.contains(query.toLowerCase(Locale.ROOT))) {
-//                        fiterList.add(item)
-//                    }
-//                }
-//            }
             listFilter.clear()
             for (child in sanpham) {
                 if (child.TenSP?.contains(query) == true) {
@@ -133,6 +116,7 @@ class Fr_home : Fragment() {
                     intent.putExtra("GiaSP", listFilter[position].GiaSP?.toFloat() ?: 0)
                     intent.putExtra("SoluongSP", listFilter[position].SoluongSP?.toInt() ?: 0)
                     intent.putExtra("AnhSP", listFilter[position].AnhSP)
+                    intent.putExtra("AnhSP2", listFilter[position].AnhSP2)
                     intent.putExtra("Id_danhmuc", listFilter[position].id_danhmuc)
                     intent.putExtra("NhacungcapSP", listFilter[position].NhacungcapSP)
                     intent.putExtra("MotaSP", listFilter[position].MotaSP)
@@ -306,24 +290,6 @@ class Fr_home : Fragment() {
                 if (snapshot.exists()) {
                     for (empSnap in snapshot.children) {
                         val spData = empSnap.getValue(Sanpham::class.java)
-                        val id_danhmuc = spData?.id_danhmuc
-                        if (id_danhmuc != null) {
-                            dpRef1.child(id_danhmuc)
-                                .addListenerForSingleValueEvent(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        if (dataSnapshot.exists()) {
-                                            // Retrieve the category name and set it on the product
-                                            val categoryName =
-                                                dataSnapshot.child("ten_danhmuc").value.toString()
-                                            spData.id_danhmuc = categoryName
-                                        }
-                                    }
-
-                                    override fun onCancelled(databaseError: DatabaseError) {
-                                        // Handle errors here
-                                    }
-                                })
-                        }
                         sanpham.add(spData!!)
                     }
                     val madapter = sanphamAdapter(sanpham, requireContext())

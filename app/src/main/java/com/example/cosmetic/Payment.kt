@@ -153,7 +153,6 @@ class Payment : AppCompatActivity() {
                     binding.etAddress.setText(user?.address.toString())
                     binding.etPhoneNumber.setText(user?.phone.toString())
                     binding.total.setText(  intent.getStringExtra("total"))
-
                 }
 
 

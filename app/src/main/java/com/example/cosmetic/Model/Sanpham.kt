@@ -8,6 +8,7 @@ class Sanpham(
     var GiaSP: Float? = null,
     var SoluongSP:Int? = null,
     var AnhSP:String? = null,
+    var AnhSP2: String?=null,
     var id_danhmuc: String? = null,
     var NhacungcapSP:String? = null,
     var MotaSP:String? = null,

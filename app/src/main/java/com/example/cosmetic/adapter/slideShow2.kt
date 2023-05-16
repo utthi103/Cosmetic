@@ -8,10 +8,9 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmetic.R
 
-
-class SlideShow(private val images: List<Int>) : RecyclerView.Adapter<SlideShow.ViewHolder>() {
+class slideShow2 (private val images: List<Bitmap>) : RecyclerView.Adapter<slideShow2.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.vp_item_slideshow, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_detailproduct, parent, false)
         return ViewHolder(view)
     }
 
@@ -26,8 +25,8 @@ class SlideShow(private val images: List<Int>) : RecyclerView.Adapter<SlideShow.
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imageView: ImageView = itemView.findViewById(R.id.imageView)
 
-        fun bind(image: Int) {
-            imageView.setImageResource(image)
+        fun bind(bitmap: Bitmap) {
+            imageView.setImageBitmap(bitmap)
         }
     }
 }

@@ -24,6 +24,7 @@ class insertsp : AppCompatActivity() {
     private lateinit var binding: ActivityInsertspBinding
     private lateinit var db: DatabaseReference
     var simage: String? = ""
+    var simage2: String?=""
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +50,7 @@ class insertsp : AppCompatActivity() {
                 gia.toFloat(),
                 soluong.toInt(),
                 simage ,
+                simage2 ,
                 danhmuc,
                 nhacungcap,
                 mota,
@@ -85,6 +87,32 @@ class insertsp : AppCompatActivity() {
                 val bytes = stream.toByteArray()
                 simage = Base64.encodeToString(bytes,Base64.DEFAULT)
                 binding.imageView4.setImageBitmap(myBitmap)
+                inputStrem!!.close()
+            }catch (ex:java.lang.Exception){
+                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun insert_image2(view: View) {
+        val myfileintent = Intent(Intent.ACTION_GET_CONTENT)
+        myfileintent.setType("image/*")
+        ActivityResultLauncher2.launch(myfileintent)
+    }
+    private val ActivityResultLauncher2 = registerForActivityResult<Intent,ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ){
+            result:ActivityResult ->
+        if (result.resultCode== RESULT_OK){
+            val uri = result.data!!.data
+            try {
+                val inputStrem = contentResolver.openInputStream(uri!!)
+                val myBitmap = BitmapFactory.decodeStream(inputStrem)
+                val stream = ByteArrayOutputStream()
+                myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val bytes = stream.toByteArray()
+                simage2 = Base64.encodeToString(bytes,Base64.DEFAULT)
+                binding.imageView5.setImageBitmap(myBitmap)
                 inputStrem!!.close()
             }catch (ex:java.lang.Exception){
                 Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()

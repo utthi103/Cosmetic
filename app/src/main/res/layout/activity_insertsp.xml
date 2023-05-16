@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".admin.insertsp">
+    tools:context=".insertsp">
 
     <EditText
         android:id="@+id/ten"
@@ -41,7 +41,19 @@
         android:layout_height="wrap_content"
         android:onClick="insert_image"
         android:text="image" />
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="95dp"
+        android:layout_height="100dp"
+        app:srcCompat="@drawable/mau"
+        />
 
+    <Button
+        android:id="@+id/pickimage2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="insert_image2"
+        android:text="image" />
     <EditText
         android:id="@+id/id_danhmuc"
         android:layout_width="match_parent"

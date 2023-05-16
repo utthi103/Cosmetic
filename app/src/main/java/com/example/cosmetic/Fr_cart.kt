@@ -151,7 +151,7 @@ class Fr_cart : Fragment() {
     }
     fun payment() {
         val intent = Intent(requireActivity(), Payment::class.java)
-        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
         intent.putExtra("total", numberFormat.format(total))
         startActivity(intent)
         requireActivity().finish()

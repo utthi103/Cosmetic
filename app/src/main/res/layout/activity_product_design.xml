@@ -106,7 +106,7 @@
                             android:layout_marginLeft="8dp"
                             android:layout_weight="1"
                             android:textColor="@color/black"
-                            android:text="Đã bán: " />
+                            android:text="Solded: " />
                         <TextView
                             android:id="@+id/sldaban"
                             android:layout_width="wrap_content"
