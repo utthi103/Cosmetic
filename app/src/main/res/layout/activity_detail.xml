@@ -19,7 +19,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewPager"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="500dp"
         android:scaleType="center"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,6 +182,7 @@
         android:layout_marginBottom="35dp"
         android:padding="14dp"
         android:src="@drawable/icon_back"
+        android:clickable="true"
         android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="@id/Tensp"
         android:background="@drawable/cricle"

@@ -2,6 +2,7 @@ package com.example.cosmetic
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.BitmapFactory
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,11 @@ class detail : AppCompatActivity() {
             getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
         setSanPham()
         sliderShow()
+        binding.btnBack.setOnClickListener {
+            val intent = Intent(this@detail, nav_bottom::class.java)
+            startActivity(intent)
+        }
+
         binding.btnOrder.setOnClickListener {
             val countProduct = countProduct(this)
             val re = countProduct.addproduct(intent.getStringExtra("idSP").toString(),intent.getStringExtra("TenSP").toString(),
@@ -82,12 +88,12 @@ class detail : AppCompatActivity() {
                     }
 
                 }
-
                 viewPager = binding!!.viewPager
                 val bytes = Base64.decode(simage, Base64.DEFAULT)
                 val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
                 val bytes2 = Base64.decode(simage2, Base64.DEFAULT)
-                val bitmap2 = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                val bitmap2 = BitmapFactory.decodeByteArray(bytes2, 0, bytes2.size)
+
                 val images = listOf(
                     bitmap,
                     bitmap2,

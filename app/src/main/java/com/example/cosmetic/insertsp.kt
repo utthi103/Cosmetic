@@ -54,7 +54,7 @@ class insertsp : AppCompatActivity() {
                 danhmuc,
                 nhacungcap,
                 mota,
-                "0",
+                0,
                 formattedDateTime
             )
             db.child(Id_SanPham).setValue(sanpham).addOnCompleteListener {

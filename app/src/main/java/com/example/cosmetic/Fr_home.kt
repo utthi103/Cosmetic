@@ -87,46 +87,46 @@ class Fr_home : Fragment() {
     }
 
     private fun filterList(query: String) {
-            listFilter.clear()
-            for (child in sanpham) {
-                if (child.TenSP?.contains(query) == true) {
-                    listFilter.add(child)
-                }
+        listFilter.clear()
+        for (child in sanpham) {
+            if (child.TenSP?.contains(query) == true) {
+                listFilter.add(child)
             }
+        }
 //            thongbao(fiterList.size.toString())
-            if (listFilter.size == 0) {
-                thongbao("Not found")
-                listFilter.clear()
+        if (listFilter.size == 0) {
+            thongbao("Not found")
+            listFilter.clear()
+        }
+        if(query.isNotBlank() == false){
+            listFilter = sanpham
+        }
+        val madapter = sanphamAdapter(listFilter, requireContext())
+
+        binding?.recyclerView2?.adapter = madapter
+
+        binding?.recyclerView2?.layoutManager =
+            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+
+        madapter.setOnItemClickListener(object : sanphamAdapter.onItemClickListener {
+            override fun onItemClick(position: Int) {
+                val intent = Intent(requireContext(), detail::class.java)
+                intent.putExtra("idSP", listFilter[position].id_SanPham)
+                intent.putExtra("TenSP", listFilter[position].TenSP)
+                intent.putExtra("GiaSP", listFilter[position].GiaSP?.toFloat() ?: 0)
+                intent.putExtra("SoluongSP", listFilter[position].SoluongSP?.toInt() ?: 0)
+                intent.putExtra("AnhSP", listFilter[position].AnhSP)
+                intent.putExtra("AnhSP2", listFilter[position].AnhSP2)
+                intent.putExtra("Id_danhmuc", listFilter[position].id_danhmuc)
+                intent.putExtra("NhacungcapSP", listFilter[position].NhacungcapSP)
+                intent.putExtra("MotaSP", listFilter[position].MotaSP)
+                intent.putExtra("sl_daban", listFilter[position].sl_daban)
+                intent.putExtra("date", listFilter[position].date)
+                startActivity(intent)
             }
-            if(query.isNotBlank() == false){
-                listFilter = sanpham
-            }
-            val madapter = sanphamAdapter(listFilter, requireContext())
-
-            binding?.recyclerView2?.adapter = madapter
-
-            binding?.recyclerView2?.layoutManager =
-                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
-
-            madapter.setOnItemClickListener(object : sanphamAdapter.onItemClickListener {
-                override fun onItemClick(position: Int) {
-                    val intent = Intent(requireContext(), detail::class.java)
-                    intent.putExtra("idSP", listFilter[position].id_SanPham)
-                    intent.putExtra("TenSP", listFilter[position].TenSP)
-                    intent.putExtra("GiaSP", listFilter[position].GiaSP?.toFloat() ?: 0)
-                    intent.putExtra("SoluongSP", listFilter[position].SoluongSP?.toInt() ?: 0)
-                    intent.putExtra("AnhSP", listFilter[position].AnhSP)
-                    intent.putExtra("AnhSP2", listFilter[position].AnhSP2)
-                    intent.putExtra("Id_danhmuc", listFilter[position].id_danhmuc)
-                    intent.putExtra("NhacungcapSP", listFilter[position].NhacungcapSP)
-                    intent.putExtra("MotaSP", listFilter[position].MotaSP)
-                    intent.putExtra("sl_daban", listFilter[position].sl_daban)
-                    intent.putExtra("date", listFilter[position].date)
-                    startActivity(intent)
-                }
-            })
+        })
 //                thongbao(fiterList.size.toString())
-            mmAdapter?.setFilter(listFilter)
+        mmAdapter?.setFilter(listFilter)
 //        } else {
 //            mmAdapter?.setFilter(sanpham)
 ////            thongbao(sanpham.size.toString())// Hiển thị lại danh sách ban đầu khi query rỗng
@@ -188,7 +188,7 @@ class Fr_home : Fragment() {
                     binding?.RcvCategory?.adapter = madapter
 
                     binding?.RcvCategory?.layoutManager =
-                        GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+                        GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
 
                     madapter.setOnItemClickListener(object : categoryAdapter.onItemClickListener {
                         override fun onItemClick(position: Int) {
@@ -284,7 +284,7 @@ class Fr_home : Fragment() {
         dpRef = FirebaseDatabase.getInstance().getReference("sanpham")
         dpRef1 = FirebaseDatabase.getInstance().getReference("danhmuc")
 
-        dpRef.addValueEventListener(object : ValueEventListener {
+        dpRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 sanpham.clear()
                 if (snapshot.exists()) {
@@ -292,7 +292,7 @@ class Fr_home : Fragment() {
                         val spData = empSnap.getValue(Sanpham::class.java)
                         sanpham.add(spData!!)
                     }
-                    val madapter = sanphamAdapter(sanpham, requireContext())
+                    val madapter = sanphamAdapter(sanpham, context!!)
 
                     binding?.recyclerView2?.adapter = madapter
 

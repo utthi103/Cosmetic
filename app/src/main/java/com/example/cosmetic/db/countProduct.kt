@@ -63,7 +63,6 @@ class countProduct(private val context: Context) {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if(snapshot.exists()){
                                     var check = false
-
                                     for (cartSnap in snapshot.children) {
                                         val cartData = cartSnap.getValue(cart::class.java)
                                         if (cartData?.id_SP.equals(idSP)){

@@ -11,10 +11,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
-import com.example.cosmetic.Model.cart
-import com.example.cosmetic.Model.order
-import com.example.cosmetic.Model.orderDetail
-import com.example.cosmetic.Model.user
+import com.example.cosmetic.Model.*
 import com.example.cosmetic.adapter.cartAdapter
 import com.example.cosmetic.databinding.ActivityMainBinding
 import com.example.cosmetic.databinding.ActivityPaymentBinding
@@ -30,6 +27,8 @@ class Payment : AppCompatActivity() {
     private lateinit var dpRef: DatabaseReference
     private lateinit var dpRef2: DatabaseReference
     private lateinit var dpRef3: DatabaseReference
+    private lateinit var dpDaban: DatabaseReference
+    private lateinit var dpDaban1: DatabaseReference
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +45,8 @@ class Payment : AppCompatActivity() {
         setdata()
     }
 
+
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun order() {
         val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -61,7 +62,7 @@ class Payment : AppCompatActivity() {
         val currentDateTime = LocalDateTime.now()
         val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")
         val date = currentDateTime.format(formatter)
-
+//
         dpRef1 =  FirebaseDatabase.getInstance().getReference("order")
         dpRef2 =  FirebaseDatabase.getInstance().getReference("orderDetail")
         val total = intent.getStringExtra("total")
@@ -87,6 +88,32 @@ class Payment : AppCompatActivity() {
                             val cartData = cartSnap.getValue(cart::class.java)
                             if (cartData != null) {
                                 countProduct += cartData.soluong!!
+                                val daban = cartData.soluong
+
+                    // cập nhật số lượng
+                                dpDaban = FirebaseDatabase.getInstance().getReference("sanpham")
+                                val query = dpDaban.orderByChild("id_SanPham").equalTo(cartData.id_SP)
+                                query.addListenerForSingleValueEvent(object : ValueEventListener {
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.exists()) {
+                                            for (userSnapshot in snapshot.children) {
+                                                val product = userSnapshot.getValue(Sanpham::class.java)
+                                            dpDaban1 = FirebaseDatabase.getInstance().getReference("sanpham").child(cartData.id_SP.toString())
+                                                val daban = product?.sl_daban!!.toInt() + cartData.soluong!!.toInt()
+                                                dpDaban1.child("sl_daban").setValue(daban)
+
+                                                dpDaban1.child("soluongSP").setValue(product.SoluongSP?.minus(
+                                                    cartData.soluong!!
+                                                ))
+                                            }
+
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+                                })
                             }
                             val orderdetailDpref =  dpRef3.push()
                             val orderDetail = orderDetail(id_order,cartData?.id_SP, cartData?.name,
@@ -109,9 +136,6 @@ class Payment : AppCompatActivity() {
                 val intent = Intent(this@Payment, nav_bottom::class.java)
                         startActivity(intent)
                     }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
                     builder.show()
 
                 }

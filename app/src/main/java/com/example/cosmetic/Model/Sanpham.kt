@@ -12,7 +12,7 @@ class Sanpham(
     var id_danhmuc: String? = null,
     var NhacungcapSP:String? = null,
     var MotaSP:String? = null,
-    var sl_daban: String? = null,
+    var sl_daban: Int? = null,
     var date: String? = null
 ) {
 }
