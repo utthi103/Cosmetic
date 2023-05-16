@@ -28,7 +28,6 @@ import com.example.cosmetic.adapter.categoryAdapter
 import com.example.cosmetic.databinding.FragmentFrHomeBinding
 
 
-
 import com.google.firebase.database.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -45,19 +44,26 @@ private const val ARG_PARAM2 = "param2"
  */
 class Fr_home : Fragment() {
     private var binding: FragmentFrHomeBinding? = null
-    private lateinit var sanpham:ArrayList<Sanpham>
-    private lateinit var danhmuc:ArrayList<danhmucSP>
-    private lateinit var spdanhmuc:ArrayList<Sanpham>
-    private lateinit var dpRef:DatabaseReference
-    private lateinit var dpRef1:DatabaseReference
-    private lateinit var viewPager :ViewPager2
-    private  var mmAdapter:sanphamAdapter?=null
+    private lateinit var sanpham: ArrayList<Sanpham>
+    private lateinit var danhmuc: ArrayList<danhmucSP>
+    private lateinit var spdanhmuc: ArrayList<Sanpham>
+    private lateinit var dpRef: DatabaseReference
+    private lateinit var dpRef1: DatabaseReference
+    private lateinit var viewPager: ViewPager2
+    private lateinit var listFilter: ArrayList<Sanpham>
+    private var mmAdapter: sanphamAdapter? = null
+
     @SuppressLint("SuspiciousIndentation")
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentFrHomeBinding.inflate(inflater, container, false)
         sliderShow()
-              mmAdapter = sanphamAdapter(ArrayList(), requireContext())
+        mmAdapter = sanphamAdapter(ArrayList(), requireContext())
+        listFilter = arrayListOf()
         binding!!.recyclerView2.adapter = mmAdapter
         binding!!.searchVieww.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -75,11 +81,11 @@ class Fr_home : Fragment() {
         return binding!!.root
     }
 
-    private fun thongbao(thongbao:String) {
+    private fun thongbao(thongbao: String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
@@ -87,30 +93,64 @@ class Fr_home : Fragment() {
 //        }
         builder.show()
     }
+
     private fun filterList(query: String) {
-        if (query.isNotBlank()) { // Kiểm tra query có độ dài > 0
-            val fiterList = ArrayList<Sanpham>()
-            for (item in sanpham) {
-                item.TenSP?.toLowerCase(Locale.ROOT)?.let {
-                    if (it.contains(query.toLowerCase(Locale.ROOT))) {
-                        fiterList.add(item)
-                    }
+//        if (query.isNotBlank()) { // Kiểm tra query có độ dài > 0
+//            val fiterList = ArrayList<Sanpham>()
+//            for (item in sanpham) {
+//                item.TenSP?.toLowerCase(Locale.ROOT)?.let {
+//                    if (it.contains(query.toLowerCase(Locale.ROOT))) {
+//                        fiterList.add(item)
+//                    }
+//                }
+//            }
+            listFilter.clear()
+            for (child in sanpham) {
+                if (child.TenSP?.contains(query) == true) {
+                    listFilter.add(child)
                 }
             }
 //            thongbao(fiterList.size.toString())
-            if(fiterList.isEmpty()){
-                thongbao("Không tìm thấy")
-            } else {
-//                thongbao(fiterList.size.toString())
-                mmAdapter?.setFilter(fiterList)
+            if (listFilter.size == 0) {
+                thongbao("Not found")
+                listFilter.clear()
             }
-        } else {
-            mmAdapter?.setFilter(sanpham)
-//            thongbao(sanpham.size.toString())// Hiển thị lại danh sách ban đầu khi query rỗng
-        }
+            if(query.isNotBlank() == false){
+                listFilter = sanpham
+            }
+            val madapter = sanphamAdapter(listFilter, requireContext())
+
+            binding?.recyclerView2?.adapter = madapter
+
+            binding?.recyclerView2?.layoutManager =
+                GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+
+            madapter.setOnItemClickListener(object : sanphamAdapter.onItemClickListener {
+                override fun onItemClick(position: Int) {
+                    val intent = Intent(requireContext(), detail::class.java)
+                    intent.putExtra("idSP", listFilter[position].id_SanPham)
+                    intent.putExtra("TenSP", listFilter[position].TenSP)
+                    intent.putExtra("GiaSP", listFilter[position].GiaSP?.toFloat() ?: 0)
+                    intent.putExtra("SoluongSP", listFilter[position].SoluongSP?.toInt() ?: 0)
+                    intent.putExtra("AnhSP", listFilter[position].AnhSP)
+                    intent.putExtra("Id_danhmuc", listFilter[position].id_danhmuc)
+                    intent.putExtra("NhacungcapSP", listFilter[position].NhacungcapSP)
+                    intent.putExtra("MotaSP", listFilter[position].MotaSP)
+                    intent.putExtra("sl_daban", listFilter[position].sl_daban)
+                    intent.putExtra("date", listFilter[position].date)
+                    startActivity(intent)
+                }
+            })
+//                thongbao(fiterList.size.toString())
+            mmAdapter?.setFilter(listFilter)
+//        } else {
+//            mmAdapter?.setFilter(sanpham)
+////            thongbao(sanpham.size.toString())// Hiển thị lại danh sách ban đầu khi query rỗng
+//        }
     }
+
     private fun sliderShow() {
-        viewPager= binding!!.viewPager
+        viewPager = binding!!.viewPager
         val images = listOf(
             R.drawable.item_slide1,
             R.drawable.item_slide2,
@@ -141,8 +181,8 @@ class Fr_home : Fragment() {
 
         binding?.recyclerView2?.layoutManager = LinearLayoutManager(context)
         binding?.recyclerView2?.setHasFixedSize(true)
-        sanpham = arrayListOf<Sanpham>()
-        danhmuc = arrayListOf<danhmucSP>()
+//        sanpham = arrayListOf<Sanpham>()
+//        danhmuc = arrayListOf<danhmucSP>()
         spdanhmuc = arrayListOf<Sanpham>()
         getSanPham()
         getcategory()
@@ -154,12 +194,12 @@ class Fr_home : Fragment() {
         dpRef1.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 danhmuc.clear()
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     for (empSnap in snapshot.children) {
                         val empData = empSnap.getValue(danhmucSP::class.java)
                         danhmuc.add(empData!!)
                     }
-                    val madapter = categoryAdapter(danhmuc,requireContext())
+                    val madapter = categoryAdapter(danhmuc, requireContext())
 //
                     binding?.RcvCategory?.adapter = madapter
 
@@ -178,29 +218,54 @@ class Fr_home : Fragment() {
 
                                         for (userSnapshot in snapshot.children) {
                                             val sanpham = userSnapshot.getValue(Sanpham::class.java)
-                                        spdanhmuc.add(sanpham!!)
+                                            spdanhmuc.add(sanpham!!)
 
                                         }
 
-                                        val madapter = sanphamAdapter(spdanhmuc,requireContext())
+                                        val madapter = sanphamAdapter(spdanhmuc, requireContext())
 
                                         binding?.recyclerView2?.adapter = madapter
 
                                         binding?.recyclerView2?.layoutManager =
-                                            GridLayoutManager(requireContext(), 2, GridLayoutManager.VERTICAL, false)
+                                            GridLayoutManager(
+                                                requireContext(),
+                                                2,
+                                                GridLayoutManager.VERTICAL,
+                                                false
+                                            )
 
-                                        madapter.setOnItemClickListener(object : sanphamAdapter.onItemClickListener {
+                                        madapter.setOnItemClickListener(object :
+                                            sanphamAdapter.onItemClickListener {
                                             override fun onItemClick(position: Int) {
-                                                val intent = Intent(requireContext(), detail::class.java)
-                                                intent.putExtra("idSP", sanpham[position].id_SanPham)
+                                                val intent =
+                                                    Intent(requireContext(), detail::class.java)
+                                                intent.putExtra(
+                                                    "idSP",
+                                                    sanpham[position].id_SanPham
+                                                )
                                                 intent.putExtra("TenSP", sanpham[position].TenSP)
-                                                intent.putExtra("GiaSP", sanpham[position].GiaSP?.toFloat() ?: 0)
-                                                intent.putExtra("SoluongSP", sanpham[position].SoluongSP?.toInt() ?: 0)
+                                                intent.putExtra(
+                                                    "GiaSP",
+                                                    sanpham[position].GiaSP?.toFloat() ?: 0
+                                                )
+                                                intent.putExtra(
+                                                    "SoluongSP",
+                                                    sanpham[position].SoluongSP?.toInt() ?: 0
+                                                )
                                                 intent.putExtra("AnhSP", sanpham[position].AnhSP)
-                                                intent.putExtra("Id_danhmuc", sanpham[position].id_danhmuc)
-                                                intent.putExtra("NhacungcapSP", sanpham[position].NhacungcapSP)
+                                                intent.putExtra(
+                                                    "Id_danhmuc",
+                                                    sanpham[position].id_danhmuc
+                                                )
+                                                intent.putExtra(
+                                                    "NhacungcapSP",
+                                                    sanpham[position].NhacungcapSP
+                                                )
                                                 intent.putExtra("MotaSP", sanpham[position].MotaSP)
-                                                intent.putExtra("sl_daban", sanpham[position].sl_daban)
+                                                intent.putExtra(
+                                                    "sl_daban",
+                                                    sanpham[position].sl_daban
+                                                )
                                                 intent.putExtra("date", sanpham[position].date)
                                                 startActivity(intent)
                                             }
@@ -221,6 +286,7 @@ class Fr_home : Fragment() {
                     })
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
@@ -229,6 +295,8 @@ class Fr_home : Fragment() {
     }
 
     fun getSanPham() {
+        sanpham = arrayListOf<Sanpham>()
+        danhmuc = arrayListOf<danhmucSP>()
         dpRef = FirebaseDatabase.getInstance().getReference("sanpham")
         dpRef1 = FirebaseDatabase.getInstance().getReference("danhmuc")
 
@@ -258,7 +326,7 @@ class Fr_home : Fragment() {
                         }
                         sanpham.add(spData!!)
                     }
-                    val madapter = sanphamAdapter(sanpham,requireContext())
+                    val madapter = sanphamAdapter(sanpham, requireContext())
 
                     binding?.recyclerView2?.adapter = madapter
 
@@ -273,6 +341,7 @@ class Fr_home : Fragment() {
                             intent.putExtra("GiaSP", sanpham[position].GiaSP?.toFloat() ?: 0)
                             intent.putExtra("SoluongSP", sanpham[position].SoluongSP?.toInt() ?: 0)
                             intent.putExtra("AnhSP", sanpham[position].AnhSP)
+                            // Tao
                             intent.putExtra("Id_danhmuc", sanpham[position].id_danhmuc)
                             intent.putExtra("NhacungcapSP", sanpham[position].NhacungcapSP)
                             intent.putExtra("MotaSP", sanpham[position].MotaSP)
@@ -291,6 +360,6 @@ class Fr_home : Fragment() {
     }
 
     companion object {
-        fun newInstance(): Fr_home= Fr_home()
+        fun newInstance(): Fr_home = Fr_home()
     }
 }

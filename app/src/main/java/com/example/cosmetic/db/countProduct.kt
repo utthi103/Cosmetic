@@ -13,6 +13,15 @@ class countProduct(private val context: Context) {
             thongbao("dsfs")
     }
 
+    fun check_user(): Boolean {
+        val sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val iduser = sharedPreferences.getString("iduser",null)
+        if(iduser!=null){
+            return true
+        }else{
+            return false
+        }
+    }
     fun countProduct(idProduct: String, onComplete: (Int) -> Unit) {
         val dp = FirebaseDatabase.getInstance().getReference("sanpham").child(idProduct)
         dp.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -67,12 +76,12 @@ class countProduct(private val context: Context) {
 //                                            chưa tồn tại
 //                                            holder.giaSp.setText(cur.id_SanPham.toString())
                                         db.child(iduser.toString()).child(id_cart).setValue(cart1)
-                                        thongbao("Đã thêm sản phẩm vào giỏ hàng")
+                                        thongbao("Added product to cart")
 
 
                                     } else {
 //                                            holder.giaSp.setText(iduser.toString())
-                                        thongbao("Sản phẩm đã tồn tại trong giỏ hàng của bạn")
+                                        thongbao("Product is exist your cart")
 
                                     }
                                 }
@@ -99,9 +108,9 @@ class countProduct(private val context: Context) {
 
     private fun thongbao(thongbao: String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->

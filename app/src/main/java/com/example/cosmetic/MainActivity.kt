@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnRegister.setOnClickListener {
-            val intent  = Intent(this, insert_category::class.java)
+            val intent  = Intent(this, insertsp::class.java)
             startActivity(intent)
         }
         binding.txtsignin.setOnClickListener {

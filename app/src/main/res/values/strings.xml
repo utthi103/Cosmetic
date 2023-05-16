@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Cosmetic</string>
     <string name="home">Home</string>
-    <string name="cart">Giỏ hàng</string>
-    <string name="user">Tôi</string>
+    <string name="cart">Cart</string>
+    <string name="user">Account</string>
     <string name="product_title">Product Title</string>
     <string name="product_description">Description</string>
     <!-- TODO: Remove or change this placeholder text -->

@@ -21,7 +21,10 @@ class Login : AppCompatActivity() {
         binding.loginbtn.setOnClickListener {
             login()
         }
-
+binding.register.setOnClickListener {
+    val intent = Intent(this@Login, Register::class.java)
+    startActivity(intent)
+}
 
     }
 
@@ -43,16 +46,16 @@ class Login : AppCompatActivity() {
 //                            isPasswordMatched = true
                             val intent = Intent(this@Login, Welcome::class.java)
 //                            startActivity(intent)
-                            Toast.makeText(this@Login, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@Login, "Login successful", Toast.LENGTH_SHORT).show()
                             startActivity(intent)
                         }else{
 //                            Toast.makeText(this@Login, "Mật khẩu kh", Toast.LENGTH_SHORT).show()
-                            thongbao("Sai mật khẩu")
+                            thongbao("Wrong password")
                         }
                     }
 
                 } else {
-                    thongbao("Email không tồn tại")
+                    thongbao("Email not exist")
 
                 }
 
@@ -73,9 +76,9 @@ class Login : AppCompatActivity() {
     }
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
         }
 
         builder.show()

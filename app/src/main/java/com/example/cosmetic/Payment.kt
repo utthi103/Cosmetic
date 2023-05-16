@@ -1,11 +1,13 @@
 package com.example.cosmetic
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.GridLayoutManager
@@ -35,7 +37,7 @@ class Payment : AppCompatActivity() {
         binding = ActivityPaymentBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.btnBack.setOnClickListener {
-            val intent = Intent(this, Fr_cart::class.java)
+            val intent = Intent(this, nav_bottom::class.java)
             startActivity(intent)
         }
             binding.btnPay.setOnClickListener {
@@ -77,6 +79,7 @@ class Payment : AppCompatActivity() {
 
             query.addListenerForSingleValueEvent(object : ValueEventListener {
 
+                @SuppressLint("SuspiciousIndentation")
                 override fun onDataChange(snapshot: DataSnapshot) {
 
                     if (snapshot.exists()) {
@@ -99,24 +102,38 @@ class Payment : AppCompatActivity() {
                         total, countProduct
                         ,date)
                     dpRef1.child(id_order).setValue(orderr)
+                    val builder = AlertDialog.Builder(this@Payment)
+                    builder.setTitle("Notification")
+                    builder.setMessage("Order successful")
+                    builder.setPositiveButton("Agree") { dialog, which ->
+                val intent = Intent(this@Payment, nav_bottom::class.java)
+                        startActivity(intent)
+                    }
+//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
+//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
+//        }
+                    builder.show()
+
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     // Handle errors here
                 }
             })
+            dpRef.removeValue()
+
         }
-dpRef.removeValue()
 
 
     }
 
+
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
-            // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
+        builder.setPositiveButton("Agree") { dialog, which ->
+
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
 //            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"

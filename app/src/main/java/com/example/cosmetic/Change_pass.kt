@@ -44,19 +44,19 @@ class Change_pass : AppCompatActivity() {
         val pass_confrim = confirm.text.toString()
 
         if(pass_confrim.isEmpty()||pass_new.isEmpty()||pass_curr.isEmpty()){
-            thongbao("Vui long dien day du thong tin")
+            thongbao("Please fill in form")
         }else{
                 pass_curr = hashPassword(pass_curr)
 
             if(pass_curr==pass){
                 if(pass_new==pass_confrim){
                         if(pass_new.length<6){
-                            thongbao("Mật khẩu phải từ 6 kí tự trở lên")
+                            thongbao("Pasword is more than 6 characters ")
                         }else{
                             val builder = AlertDialog.Builder(this)
-                            builder.setTitle("Thông báo")
-                            builder.setMessage("Bạn có chắc chắn muốn đổi mật khẩu không")
-                            builder.setPositiveButton("Đồng ý") { dialog, which ->
+                            builder.setTitle("Notification")
+                            builder.setMessage("Do you want to change your password")
+                            builder.setPositiveButton("Agree") { dialog, which ->
                              pass_new = hashPassword(pass_new)
                                 val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                                 val iduser = sharedPreferences?.getString("iduser",null)
@@ -64,9 +64,9 @@ class Change_pass : AppCompatActivity() {
                                 dpRef.child("pass").setValue(pass_new).addOnCompleteListener { task ->
                                     if (task.isSuccessful) {
                                             val builder = AlertDialog.Builder(this)
-                                            builder.setTitle("Thông báo")
-                                            builder.setMessage("Đổi mật khẩu thành công. Vui lòng đăng nhập lại")
-                                            builder.setPositiveButton("Đồng ý") { dialog, which ->
+                                            builder.setTitle("Notification")
+                                            builder.setMessage("Change password successfully. Please sign in again")
+                                            builder.setPositiveButton("Agrees") { dialog, which ->
                                                 val intent  = Intent(this, Login::class.java)
                                                 startActivity(intent)
                                             }
@@ -81,18 +81,18 @@ class Change_pass : AppCompatActivity() {
 
 
                             }
-                            builder.setNegativeButton("Hủy bỏ") { dialog, which ->
+                            builder.setNegativeButton("Cancel") { dialog, which ->
                                 dialog.dismiss()
 
                             }
                             builder.show()
                         }
                 }else{
-                    thongbao("Mật khẩu không trùng khớp")
+                    thongbao("Password does not match")
                 }
 
             }else{
-                thongbao("Mật khẩu sai")
+                thongbao("Wrong password")
             }
 
         }
@@ -178,9 +178,9 @@ class Change_pass : AppCompatActivity() {
     }
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
         }
 
         builder.show()

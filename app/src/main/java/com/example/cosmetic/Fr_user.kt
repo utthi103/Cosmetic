@@ -86,9 +86,9 @@ class Fr_user : Fragment() {
 
 
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Thông báo")
-            builder.setMessage("Bạn có chắc chắn muốn đăng xuất không")
-            builder.setPositiveButton("Đồng ý") { dialog, which ->
+            builder.setTitle("Notification")
+            builder.setMessage("Do you want to log out")
+            builder.setPositiveButton("Agree") { dialog, which ->
                 val sharedPreferences = context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
                 if (sharedPreferences != null) {
                     sharedPreferences.edit().putString("iduser", null).apply()
@@ -96,7 +96,7 @@ class Fr_user : Fragment() {
                     startActivity(intent)
                 }
             }
-            builder.setNegativeButton("Hủy bỏ") { dialog, which ->
+            builder.setNegativeButton("Cancel") { dialog, which ->
 
             }
             builder.show()
@@ -158,8 +158,8 @@ class Fr_user : Fragment() {
 
     private fun confirm() {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
-        builder.setMessage("Bạn có chắc chắn muốn đổi ảnh")
+        builder.setTitle("Notification")
+        builder.setMessage("Do you want to change your picture")
         builder.setPositiveButton("Đồng ý") { dialog, which ->
 //        id user
             val sharedPreferences = context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -168,7 +168,7 @@ class Fr_user : Fragment() {
             dpRef.child("image").setValue(simage).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
-                  thongbao("Đổi ảnh thành công")
+                  thongbao("Change picture successful")
                 } else {
                 }
             }
@@ -177,7 +177,7 @@ class Fr_user : Fragment() {
 
 
         }
-        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, which ->
             dialog.dismiss()
 
         }
@@ -193,9 +193,9 @@ class Fr_user : Fragment() {
 
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->

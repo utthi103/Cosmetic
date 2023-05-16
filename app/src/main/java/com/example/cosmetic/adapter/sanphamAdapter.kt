@@ -57,7 +57,7 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
 //        thongbao("TenSP: ${cur.TenSP}")
         holder.tensanpham.setText(cur.TenSP.toString())
         holder.danhmuc.setText(cur.id_danhmuc.toString())
-        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
 
 // Chuyển đổi giá trị float thành định dạng tiền tệ
         val formattedPrice = numberFormat.format(cur.GiaSP)
@@ -82,14 +82,11 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
 
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
         builder.show()
     }
 
@@ -97,24 +94,6 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
     override fun getItemCount(): Int {
         return sanpham.size
     }
-//    fun filterData(query: String) {
-//        if (query.isEmpty()) {
-//            // Nếu chuỗi tìm kiếm rỗng, hiển thị lại toàn bộ dữ liệu ban đầu
-//            sanpham.clear()
-//            sanpham.addAll(originalSanpham)
-//        } else {
-//            // Nếu chuỗi tìm kiếm không rỗng, lọc dữ liệu theo chuỗi tìm kiếm
-//            val filteredList = ArrayList<Sanpham>()
-//            for (item in originalSanpham) {
-//                if (item.TenSP?.toLowerCase()?.contains(query.toLowerCase()) == true) {
-//                    filteredList.add(item)
-//                }
-//            }
-//            sanpham.clear()
-//            sanpham.addAll(filteredList)
-//        }
-//        notifyDataSetChanged()
-//    }
 
     fun setFilter(mList:ArrayList<Sanpham>){
         sanpham.clear() // Xóa tất cả các sản phẩm hiện có trong danh sách

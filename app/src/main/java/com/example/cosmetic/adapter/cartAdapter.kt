@@ -45,7 +45,7 @@ class cartAdapter(private val cart:ArrayList<cart>,private val context: Context)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val cur = cart[position]
         holder.tenSP.setText(cur.name.toString())
-        val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
         val formattedPrice = numberFormat.format(cur.giaSP)
         holder.giaSP.setText(formattedPrice)
         holder.sl.setText(cur.soluong.toString())
@@ -63,14 +63,14 @@ class cartAdapter(private val cart:ArrayList<cart>,private val context: Context)
         val iduser = sharedPreferences.getString("iduser",null)
         holder.delete.setOnClickListener {
             val builder = AlertDialog.Builder(context)
-            builder.setTitle("Thông báo")
+            builder.setTitle("Notification")
 
-                        builder.setMessage("Bạn có chắc chắn muốn xóa không?")
-            builder.setPositiveButton("Đồng ý") { dialog, which ->
+                        builder.setMessage("Do you want to delete?")
+            builder.setPositiveButton("Agree") { dialog, which ->
                 deleteProduct(idCart = cur.id_cart.toString(), iduser.toString())
                 notifyDataSetChanged()
             }
-        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
+        builder.setNegativeButton("Cancel") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
         }
             builder.show()
@@ -99,7 +99,7 @@ update.setValue(cart1).addOnCompleteListener { task ->
             val countProduct = countProduct(context)
                         val count = countProduct.countProduct(cur.id_SP.toString()) { productCount ->
             if (curSL!! >productCount){
-                    thongbao("soos luong qua lon")
+                    thongbao("Quantity is too large")
             }else{
                 val cart1 = cart(cur.id_cart,iduser.toString(),cur.id_SP,cur.name.toString(),cur.giaSP,cur.image.toString(),curSL)
                 val update = FirebaseDatabase.getInstance().getReference("cart").child(iduser.toString()).child(cur.id_cart.toString())
@@ -120,9 +120,9 @@ update.setValue(cart1).addOnCompleteListener { task ->
     }
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(context)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->

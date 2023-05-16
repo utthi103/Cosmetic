@@ -13,6 +13,6 @@ class Welcome : AppCompatActivity() {
         // delay picture
         Handler().postDelayed({
             startActivity(Intent(this,nav_bottom::class.java))
-        },1000)
+        },500)
     }
 }

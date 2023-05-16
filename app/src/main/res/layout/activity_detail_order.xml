@@ -8,7 +8,7 @@
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Chi tiết đơn hàng"
+        android:text="Detail Product"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Tên" />
+            android:text="Name" />
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Hình ảnh" />
+            android:text="Picture" />
 
         <TextView
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Số lượng" />
+            android:text="Quantity" />
 
         <TextView
             android:layout_width="0dp"
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Tổng tiền" />
+            android:text="Total" />
 
 
 

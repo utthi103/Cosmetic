@@ -4,24 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/banner_hi"
+    android:background="@drawable/banner12"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+
     <Button
-        android:id="@+id/btn_register"
+        android:id="@+id/btnRegister"
         android:layout_width="115dp"
         android:layout_height="59dp"
-        android:backgroundTint="#910CA8"
+        android:backgroundTint="#009688"
         android:paddingBottom="5dp"
         android:text="Register now"
         android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.922"
+        app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.998" />
 
     <TextView
         android:id="@+id/welcom"
@@ -30,8 +31,8 @@
         android:fontFamily="sans-serif-smallcaps"
         android:gravity="center"
         android:padding="0dp"
-        android:text="WELCOM TO PT COMESTIC "
-        android:textColor="#7C0B8F"
+        android:text="WELCOM TO PTCometic"
+        android:textColor="#198C1E"
         android:textSize="35dp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toTopOf="@+id/Thanks"
@@ -39,24 +40,25 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" />
+        app:layout_constraintVertical_bias="0.411" />
 
     <TextView
         android:id="@+id/Thanks"
         android:layout_width="354dp"
         android:layout_height="89dp"
         android:layout_marginLeft="5dp"
+        android:background="@color/white"
+        android:backgroundTint="#9DCFAB"
         android:padding="20dp"
         android:text="We are feeling good that you have choose PT shop. Hope you have a good experience!"
-        android:textColor="#7C0B8F"
-        android:textSize="18dp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        android:textColor="#000"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegister"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.543"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.375" />
+        app:layout_constraintVertical_bias="0.41" />
 
     <TextView
         android:id="@+id/textView2"
@@ -69,10 +71,10 @@
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.467"
+        app:layout_constraintHorizontal_bias="0.393"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.978"
+        app:layout_constraintVertical_bias="0.981"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -82,8 +84,8 @@
         android:layout_gravity="center"
         android:padding="1dp"
         android:text="Or sign in with"
-        android:textColor="@color/black"
-        android:textSize="17dp"
+        android:textColor="#000"
+        android:textSize="19dp"
         android:textStyle="italic"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,7 +125,6 @@
             android:layout_height="38dp"
             android:src="@drawable/gg" />
 
-
     </LinearLayout>
 
     <TextView
@@ -131,10 +132,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sign in"
-        android:clickable="true"
         android:textSize="18dp"
-        android:textStyle="italic"
-        android:textColor="#0C7EDA"
+        android:textStyle="bold"
+        android:textColor="#1E0722"
         app:layout_constraintBottom_toTopOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -144,16 +144,20 @@
         tools:ignore="MissingConstraints" />
 
     <Button
-        android:id="@+id/btn_skip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/btnSkip"
+        android:layout_width="115dp"
+        android:layout_height="59dp"
         android:layout_marginStart="282dp"
         android:layout_marginEnd="41dp"
-        android:layout_marginBottom="16dp"
+        android:backgroundTint="#009688"
         android:text="Skip"
-        app:layout_constraintBottom_toTopOf="@+id/btn_register"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Thanks"
+        app:layout_constraintVertical_bias="0.638"
         tools:ignore="MissingConstraints" />
 
 

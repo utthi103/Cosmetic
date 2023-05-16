@@ -8,7 +8,7 @@
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Lịch sử mua hàng"
+        android:text="History Order"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Ngày đặt" />
+            android:text="Date" />
 
         <TextView
             android:layout_width="0dp"
@@ -32,7 +32,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Số lượng" />
+            android:text="Quatity" />
 
         <TextView
             android:layout_width="0dp"
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20dp"
-            android:text="Tổng tiền" />
+            android:text="Total" />
 
 
     </LinearLayout>

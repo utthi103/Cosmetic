@@ -32,9 +32,9 @@ class editProfile : AppCompatActivity() {
     }
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
         }
 
         builder.show()
@@ -44,7 +44,7 @@ class editProfile : AppCompatActivity() {
         val address = binding.addressEt.text.toString()
         val phone = binding.phoneEt.text.toString()
         if(address.isEmpty()||phone.isEmpty()){
-            thongbao("Vui lòng điền đầy đủ thông tin")
+            thongbao("Please fill in form")
         }else{
             if(phone.length==10){
                 val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
@@ -56,12 +56,14 @@ class editProfile : AppCompatActivity() {
                 dpRef.updateChildren(childUpdates).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
-                        thongbao("Đổi thông tin thành công")
+                        thongbao("Updated successfull")
+//                        val intent = Intent(this@editProfile, Fr_user::class.java)
+//                        startActivity(intent)
                     } else {
                     }
                 }
             }else{
-                thongbao("Số điện thoại không hợp lệ")
+                thongbao("Wrong phone")
             }
 
         }

@@ -31,6 +31,11 @@ class Register : AppCompatActivity() {
             pass()
             checkvalue()
         }
+
+        binding.login.setOnClickListener {
+            val intent = Intent(this@Register, Login::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun pass() {
@@ -46,13 +51,13 @@ class Register : AppCompatActivity() {
         var phone = binding.phone.text.toString()
         var image = ""
        if(email.isEmpty()||pass.isEmpty()||confirm.isEmpty()||address.isEmpty()||phone.isEmpty()){
-           thongbao("Vui lòng điền đầy đủ thông tin")
+           thongbao("Please fill in form")
        }else{
            if(pass!=confirm){
-               thongbao("Mật khẩu không trùng khớp")
+               thongbao("Password not match")
            }else{
                if(pass.length<6){
-                   thongbao("Mật khẩu tối thiểu 6 kí tự")
+                   thongbao("Password is more than 6 characters")
                }else{
                    if(phone.length==10){
                        pass = hashPassword(pass)
@@ -62,8 +67,8 @@ class Register : AppCompatActivity() {
                        dbRef.child(Id_user).setValue(user).addOnCompleteListener {
 
                            val builder = AlertDialog.Builder(this)
-                           builder.setTitle("Thông báo")
-                           builder.setMessage("Đăng ký thành công, vui lòng đăng nhập để tiếp tục")
+                           builder.setTitle("Notification")
+                           builder.setMessage("Register successful, please login to continue")
                            builder.setPositiveButton("Đồng ý") { dialog, which ->
                                val intent  = Intent(this, Login::class.java)
                                startActivity(intent)
@@ -75,7 +80,7 @@ class Register : AppCompatActivity() {
                            Toast.makeText(this@Register, "ERR ${err.message}", Toast.LENGTH_SHORT).show()
                        }
                    }else{
-                       thongbao("Số điện thoại không hợp lệ")
+                       thongbao("Wrong phone")
                    }
                }
            }
@@ -85,9 +90,9 @@ class Register : AppCompatActivity() {
 
     private fun thongbao(thongbao:String) {
         val builder = AlertDialog.Builder(this)
-        builder.setTitle("Thông báo")
+        builder.setTitle("Notification")
         builder.setMessage(thongbao)
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
             // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
 //        builder.setNegativeButton("Hủy bỏ") { dialog, which ->

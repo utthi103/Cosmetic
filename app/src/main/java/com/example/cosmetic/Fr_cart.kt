@@ -1,6 +1,7 @@
 package com.example.cosmetic
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -10,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cosmetic.Model.cart
@@ -80,7 +82,7 @@ class Fr_cart : Fragment() {
                         }
                     }
 
-                    val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
+                    val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
                     val formattedPrice = numberFormat.format(total)
 
                     binding?.total?.text = formattedPrice
@@ -101,7 +103,7 @@ class Fr_cart : Fragment() {
         if (iduser != null) {
             val idUser = sharedPreferences.getString("iduser", "").toString()
             val query = dpRef.child(idUser).orderByChild("id_cart")
-            query.addListenerForSingleValueEvent(object : ValueEventListener {
+            query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     cart1.clear()
                     if (snapshot.exists()) {
@@ -111,17 +113,19 @@ class Fr_cart : Fragment() {
                             cart1.add(cartData!!)
                         }
 //                        Toast.makeText(context, cart1.size.toString(), Toast.LENGTH_SHORT).show()
-                        val madapter = cartAdapter(cart1, requireContext())
+                        val madapter = context?.let { cartAdapter(cart1, it) }
 
                         binding?.recycleviewCart?.adapter = madapter
 
                         binding?.recycleviewCart?.layoutManager =
                             GridLayoutManager(
-                                requireContext(),
+                                context,
                                 1,
                                 GridLayoutManager.VERTICAL,
                                 false
                             )
+                    }else{
+                        context?.let { thongbao("Cart is empty", it) }
                     }
                 }
 
@@ -132,7 +136,19 @@ class Fr_cart : Fragment() {
         }
 
     }
-
+    private fun thongbao(thongbao:String, context: Context) {
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Notification")
+        builder.setMessage(thongbao)
+        builder.setPositiveButton("Agree") { dialog, which ->
+            val intent = Intent(requireContext(), Welcome::class.java)
+            startActivity(intent)
+        }
+        builder.setNegativeButton("Cancel") { dialog, which ->
+            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
+        }
+        builder.show()
+    }
     fun payment() {
         val intent = Intent(requireActivity(), Payment::class.java)
         val numberFormat = NumberFormat.getCurrencyInstance(Locale.getDefault())
