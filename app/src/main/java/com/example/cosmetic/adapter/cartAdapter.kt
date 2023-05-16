@@ -123,11 +123,7 @@ update.setValue(cart1).addOnCompleteListener { task ->
         builder.setTitle("Notification")
         builder.setMessage(thongbao)
         builder.setPositiveButton("Agree") { dialog, which ->
-            // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
         builder.show()
     }
 

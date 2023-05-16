@@ -3,6 +3,7 @@ package com.example.cosmetic.adapter
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cosmetic.Login
 import com.example.cosmetic.Model.Sanpham
 import com.example.cosmetic.R
 import com.example.cosmetic.db.countProduct
@@ -53,13 +55,9 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val cur = sanpham[position]
-//        Log.d("sanphamAdapter", "TenSP: ${sanpham.TenSP}")
-//        thongbao("TenSP: ${cur.TenSP}")
         holder.tensanpham.setText(cur.TenSP.toString())
         holder.danhmuc.setText(cur.id_danhmuc.toString())
         val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
-
-// Chuyển đổi giá trị float thành định dạng tiền tệ
         val formattedPrice = numberFormat.format(cur.GiaSP)
         holder.giaSp.setText(formattedPrice)
         holder.sldaban.setText(cur.sl_daban.toString())
@@ -69,10 +67,22 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
 
 
         holder.add.setOnClickListener {
-            val countProduct = countProduct(context)
-            val re = countProduct.addproduct(cur.id_SanPham.toString(), cur.TenSP.toString(),
-                cur.GiaSP!!, cur.AnhSP.toString(), 1
-            )
+            val sharedPreferences = context.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+            val iduser = sharedPreferences.getString("iduser",null)
+            if(iduser!=null){
+                val countProduct = countProduct(context)
+                val re = countProduct.addproduct(cur.id_SanPham.toString(), cur.TenSP.toString(),
+                    cur.GiaSP!!, cur.AnhSP.toString(), 1
+                )
+            }else{
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Notification")
+                builder.setMessage("Please login ")
+                builder.setPositiveButton("Agree") { dialog, which ->
+                }
+                builder.show()
+            }
+
 
 
 

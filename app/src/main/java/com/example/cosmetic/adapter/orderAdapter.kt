@@ -47,7 +47,6 @@ class orderAdapter (private var order:ArrayList<order>, private val context: Con
         holder.date.setText(cur.date.toString())
       holder.soluong.setText(cur.countproduct.toString())
         holder.total.setText(cur.total.toString())
-//        holder.thaotac.setText("zdfds")
 
 
     }

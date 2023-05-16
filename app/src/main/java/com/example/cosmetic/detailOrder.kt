@@ -50,17 +50,7 @@ class detailOrder : AppCompatActivity(){
                     binding.rcvOrderDetail.layoutManager  = GridLayoutManager(this@detailOrder,1, GridLayoutManager.VERTICAL, false)
                     madapter.setOnItemClickListener(object : orderDetailAdapter.onItemClickListener{
                         override fun onItemClick(position: Int) {
-//                            val intent = Intent(this@detailOrder,detail::class.java )
-//                            intent.putExtra("TenSP", sanpham[position].TenSP)
-//                            intent.putExtra("GiaSP", sanpham[position].GiaSP)
-//                            intent.putExtra("SoluongSP", sanpham[position].SoluongSP)
-//                            intent.putExtra("AnhSP", sanpham[position].AnhSP)
-//                            intent.putExtra("Id_danhmuc", sanpham[position].id_danhmuc)
-//                            intent.putExtra("NhacungcapSP", sanpham[position].NhacungcapSP)
-//                            intent.putExtra("MotaSP", sanpham[position].MotaSP)
-//                            intent.putExtra("sl_daban", sanpham[position].sl_daban)
-//                            intent.putExtra("date", sanpham[position].date)
-//                            startActivity(intent)
+
                         }
                     })
                 }

@@ -27,7 +27,7 @@
             android:name=".Payment"
             android:exported="false" />
         <activity
-            android:name=".Welcome"
+            android:name=".nav_bottom"
             android:exported="false" />
         <activity
             android:name=".insert_category"
@@ -53,10 +53,10 @@
             android:name=".product_design"
             android:exported="false" />
         <activity
-            android:name=".nav_bottom"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Welcome"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

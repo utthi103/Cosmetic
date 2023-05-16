@@ -3,6 +3,8 @@ package com.example.cosmetic.db
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
+import com.example.cosmetic.Login
 import com.example.cosmetic.Model.Sanpham
 import com.example.cosmetic.Model.cart
 import com.google.firebase.database.*
@@ -101,6 +103,7 @@ class countProduct(private val context: Context) {
                     // Xử lý khi có lỗi xảy ra
                 }
             })
+        }else{
         }
 
     }
@@ -110,11 +113,7 @@ class countProduct(private val context: Context) {
         builder.setTitle("Notification")
         builder.setMessage(thongbao)
         builder.setPositiveButton("Agree") { dialog, which ->
-            // Xử lý sự kiện khi người dùng nhấn nút "Đồng ý"
         }
-//        builder.setNegativeButton("Hủy bỏ") { dialog, which ->
-//            // Xử lý sự kiện khi người dùng nhấn nút "Hủy bỏ"
-//        }
         builder.show()
     }
 

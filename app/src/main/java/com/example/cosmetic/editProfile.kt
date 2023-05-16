@@ -57,8 +57,8 @@ class editProfile : AppCompatActivity() {
                     if (task.isSuccessful) {
 
                         thongbao("Updated successfull")
-//                        val intent = Intent(this@editProfile, Fr_user::class.java)
-//                        startActivity(intent)
+                        val intent = Intent(this@editProfile, nav_bottom::class.java)
+                        startActivity(intent)
                     } else {
                     }
                 }

@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/banner12"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    >
 
 
     <Button

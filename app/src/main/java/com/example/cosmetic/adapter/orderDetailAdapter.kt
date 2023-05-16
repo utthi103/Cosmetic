@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmetic.Model.order
 import com.example.cosmetic.Model.orderDetail
 import com.example.cosmetic.R
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class orderDetailAdapter  (private var OrderDetail:ArrayList<orderDetail>, private val context: Context): RecyclerView.Adapter<orderDetailAdapter.ViewHolder>() {
     private lateinit var mListener: onItemClickListener
@@ -46,7 +49,9 @@ class orderDetailAdapter  (private var OrderDetail:ArrayList<orderDetail>, priva
         val cur = OrderDetail[position]
         holder.name.setText(cur.name_product.toString())
         holder.soluong.setText(cur.count.toString())
-        holder.total.setText(cur.price.toString())
+        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
+        val formattedPrice = numberFormat.format(cur.price)
+        holder.total.setText(formattedPrice)
         val bytes= Base64.decode(cur.image , Base64.DEFAULT)
         val bitMap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
         holder.imagee.setImageBitmap(bitMap)

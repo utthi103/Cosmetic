@@ -11,15 +11,6 @@ class cart_design : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCartDesignBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        var count = 1
 
-        binding.imgCong.setOnClickListener {
-            count += 1
-            binding.txtSl.text = count.toString()
-        }
-        binding.imgTru.setOnClickListener {
-            count = count - 1
-            binding.txtSl.text = count.toString()
-        }
     }
 }
