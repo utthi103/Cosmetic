@@ -66,9 +66,9 @@ class Fr_home : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                if (newText != null) {
-                    filterList(newText)
-                }
+
+                    filterList(newText!!)
+
                 return true
             }
         })
@@ -88,19 +88,22 @@ class Fr_home : Fragment() {
 
     private fun filterList(query: String) {
         listFilter.clear()
-        for (child in sanpham) {
-            if (child.TenSP?.contains(query) == true) {
-                listFilter.add(child)
+            for (child in sanpham) {
+                if (child.tenSP?.toLowerCase()!!.contains(query.toLowerCase()) == true) {
+                    listFilter.add(child)
+                }
             }
-        }
+                if (listFilter.size<= 0) {
+                    thongbao("Not found")
+                    listFilter.clear( )
+                }
+                if(query.isNotBlank() == false){
+                    listFilter = sanpham
+                }
+
+
 //            thongbao(fiterList.size.toString())
-        if (listFilter.size == 0) {
-            thongbao("Not found")
-            listFilter.clear()
-        }
-        if(query.isNotBlank() == false){
-            listFilter = sanpham
-        }
+
         val madapter = sanphamAdapter(listFilter, requireContext())
 
         binding?.recyclerView2?.adapter = madapter
@@ -112,25 +115,21 @@ class Fr_home : Fragment() {
             override fun onItemClick(position: Int) {
                 val intent = Intent(requireContext(), detail::class.java)
                 intent.putExtra("idSP", listFilter[position].id_SanPham)
-                intent.putExtra("TenSP", listFilter[position].TenSP)
-                intent.putExtra("GiaSP", listFilter[position].GiaSP?.toFloat() ?: 0)
-                intent.putExtra("SoluongSP", listFilter[position].SoluongSP?.toInt() ?: 0)
-                intent.putExtra("AnhSP", listFilter[position].AnhSP)
-                intent.putExtra("AnhSP2", listFilter[position].AnhSP2)
+                intent.putExtra("TenSP", listFilter[position].tenSP)
+                intent.putExtra("GiaSP", listFilter[position].giaSP?.toFloat() ?: 0)
+                intent.putExtra("SoluongSP", listFilter[position].soluongSP?.toInt() ?: 0)
+                intent.putExtra("AnhSP", listFilter[position].anhSP)
+                intent.putExtra("AnhSP2", listFilter[position].anhSP2)
                 intent.putExtra("Id_danhmuc", listFilter[position].id_danhmuc)
-                intent.putExtra("NhacungcapSP", listFilter[position].NhacungcapSP)
-                intent.putExtra("MotaSP", listFilter[position].MotaSP)
+                intent.putExtra("NhacungcapSP", listFilter[position].nhacungcapSP)
+                intent.putExtra("MotaSP", listFilter[position].motaSP)
                 intent.putExtra("sl_daban", listFilter[position].sl_daban)
                 intent.putExtra("date", listFilter[position].date)
                 startActivity(intent)
             }
         })
-//                thongbao(fiterList.size.toString())
         mmAdapter?.setFilter(listFilter)
-//        } else {
-//            mmAdapter?.setFilter(sanpham)
-////            thongbao(sanpham.size.toString())// Hiển thị lại danh sách ban đầu khi query rỗng
-//        }
+
     }
 
     private fun sliderShow() {
@@ -194,7 +193,7 @@ class Fr_home : Fragment() {
                         override fun onItemClick(position: Int) {
                             val name_category = danhmuc[position].ten_danhmuc.toString()
 
-                            val query = dpRef.orderByChild("id_danhmuc").equalTo("2")
+                            val query = dpRef.orderByChild("id_danhmuc").equalTo(name_category )
                             query.addListenerForSingleValueEvent(object : ValueEventListener {
                                 override fun onDataChange(snapshot: DataSnapshot) {
                                     spdanhmuc.clear()
@@ -227,25 +226,25 @@ class Fr_home : Fragment() {
                                                     "idSP",
                                                     sanpham[position].id_SanPham
                                                 )
-                                                intent.putExtra("TenSP", sanpham[position].TenSP)
+                                                intent.putExtra("TenSP", sanpham[position].tenSP)
                                                 intent.putExtra(
                                                     "GiaSP",
-                                                    sanpham[position].GiaSP?.toFloat() ?: 0
+                                                    sanpham[position].giaSP?.toFloat() ?: 0
                                                 )
                                                 intent.putExtra(
                                                     "SoluongSP",
-                                                    sanpham[position].SoluongSP?.toInt() ?: 0
+                                                    sanpham[position].soluongSP?.toInt() ?: 0
                                                 )
-                                                intent.putExtra("AnhSP", sanpham[position].AnhSP)
+                                                intent.putExtra("AnhSP", sanpham[position].anhSP)
                                                 intent.putExtra(
                                                     "Id_danhmuc",
                                                     sanpham[position].id_danhmuc
                                                 )
                                                 intent.putExtra(
                                                     "NhacungcapSP",
-                                                    sanpham[position].NhacungcapSP
+                                                    sanpham[position].nhacungcapSP
                                                 )
-                                                intent.putExtra("MotaSP", sanpham[position].MotaSP)
+                                                intent.putExtra("MotaSP", sanpham[position].motaSP)
                                                 intent.putExtra(
                                                     "sl_daban",
                                                     sanpham[position].sl_daban
@@ -255,7 +254,7 @@ class Fr_home : Fragment() {
                                             }
                                         })
                                     } else {
-                                        thongbao("Danh mục trống")
+                                        thongbao("Category is empty")
 
                                     }
 
@@ -283,13 +282,14 @@ class Fr_home : Fragment() {
         danhmuc = arrayListOf<danhmucSP>()
         dpRef = FirebaseDatabase.getInstance().getReference("sanpham")
         dpRef1 = FirebaseDatabase.getInstance().getReference("danhmuc")
+//        val query = dpRef.limitToFirst(3)
 
         dpRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 sanpham.clear()
                 if (snapshot.exists()) {
                     for (empSnap in snapshot.children) {
-                        val spData = empSnap.getValue(Sanpham::class.java)
+                         val spData = empSnap.getValue(Sanpham::class.java)
                         sanpham.add(spData!!)
                     }
                     val madapter = sanphamAdapter(sanpham, context!!)
@@ -303,14 +303,14 @@ class Fr_home : Fragment() {
                         override fun onItemClick(position: Int) {
                             val intent = Intent(requireContext(), detail::class.java)
                             intent.putExtra("idSP", sanpham[position].id_SanPham)
-                            intent.putExtra("TenSP", sanpham[position].TenSP)
-                            intent.putExtra("GiaSP", sanpham[position].GiaSP?.toFloat() ?: 0)
-                            intent.putExtra("SoluongSP", sanpham[position].SoluongSP?.toInt() ?: 0)
-                            intent.putExtra("AnhSP", sanpham[position].AnhSP)
+                            intent.putExtra("TenSP", sanpham[position].tenSP)
+                            intent.putExtra("GiaSP", sanpham[position].giaSP?.toFloat() ?: 0)
+                            intent.putExtra("SoluongSP", sanpham[position].soluongSP?.toInt() ?: 0)
+                            intent.putExtra("AnhSP", sanpham[position].anhSP)
                             // Tao
                             intent.putExtra("Id_danhmuc", sanpham[position].id_danhmuc)
-                            intent.putExtra("NhacungcapSP", sanpham[position].NhacungcapSP)
-                            intent.putExtra("MotaSP", sanpham[position].MotaSP)
+                            intent.putExtra("NhacungcapSP", sanpham[position].nhacungcapSP)
+                            intent.putExtra("MotaSP", sanpham[position].motaSP)
                             intent.putExtra("sl_daban", sanpham[position].sl_daban)
                             intent.putExtra("date", sanpham[position].date)
                             startActivity(intent)

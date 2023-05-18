@@ -31,6 +31,7 @@ class orderAdapter (private var order:ArrayList<order>, private val context: Con
         val date =itemView.findViewById<TextView>(R.id.date)
         val soluong =itemView.findViewById<TextView>(R.id.count)
         val total =itemView.findViewById<TextView>(R.id.total)
+        val status =itemView.findViewById<TextView>(R.id.status)
 //        val thaotac =itemView.findViewById<TextView>(R.id.operation)
 
     }
@@ -47,6 +48,7 @@ class orderAdapter (private var order:ArrayList<order>, private val context: Con
         holder.date.setText(cur.date.toString())
       holder.soluong.setText(cur.countproduct.toString())
         holder.total.setText(cur.total.toString())
+        holder.status.setText(cur.status.toString())
 
 
     }

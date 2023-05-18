@@ -161,19 +161,25 @@
         app:layout_constraintEnd_toEndOf="@id/btn_fav"
         app:layout_constraintTop_toTopOf="@id/btn_minus"
         app:layout_constraintBottom_toBottomOf="@id/btn_minus"/>
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:paddingTop="5dp"
+        app:layout_constraintStart_toStartOf="@id/Tensp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_minus"
+        >
     <TextView
         android:id="@+id/mota"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="16dp"
         android:layout_marginEnd="40dp"
         android:text="Cold, creamy, so thick that your straw stands straight up, and filled with juicy berries."
         android:textColor="@color/black"
-        android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="@id/Tensp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_minus"
+        android:textSize="15dp"
         />
+    </ScrollView>
 
     <ImageButton
         android:id="@+id/btn_back"
@@ -194,7 +200,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="40dp"
-        android:text="Thêm vào giỏ hàng"
+        android:text="Add product to cart"
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textColor="@color/white"

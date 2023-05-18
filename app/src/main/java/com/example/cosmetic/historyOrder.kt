@@ -1,6 +1,7 @@
 package com.example.cosmetic
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,8 +32,11 @@ class historyOrder : AppCompatActivity(){
     }
 
     private fun getSanPham() {
+        val sharedPreferences = getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
+        val iduser = sharedPreferences.getString("iduser",null)
         dpRef = FirebaseDatabase.getInstance().getReference("order")
-        dpRef.addValueEventListener(object: ValueEventListener {
+        val query = dpRef.orderByChild("id_user").equalTo(iduser)
+        query.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Order.clear()
                 if (snapshot.exists()) {

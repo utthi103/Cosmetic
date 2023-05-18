@@ -10,8 +10,10 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Base64
+import android.widget.Toast
 import androidx.viewpager2.widget.ViewPager2
 import com.example.cosmetic.Model.Sanpham
+import com.example.cosmetic.Model.user
 import com.example.cosmetic.adapter.SlideShow
 import com.example.cosmetic.adapter.slideShow2
 import com.example.cosmetic.databinding.ActivityDetailBinding
@@ -83,8 +85,8 @@ class detail : AppCompatActivity() {
                 if (snapshot.exists()) {
                     for (empSnap in snapshot.children) {
                         val spData = empSnap.getValue(Sanpham::class.java)
-                        simage = spData!!.AnhSP.toString()
-                        simage2 = spData!!.AnhSP2.toString()
+                        simage = spData!!.anhSP.toString()
+                        simage2 = spData!!.anhSP2.toString()
                     }
 
                 }
@@ -146,14 +148,37 @@ class detail : AppCompatActivity() {
     }
 
     private fun setSanPham() {
-        binding.Tensp.text = intent.getStringExtra("TenSP")
-        val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
-        val formattedPrice = numberFormat.format(intent.getFloatExtra("GiaSP", 0f))
-        binding.giasp.text = formattedPrice
-        binding.mota.text = intent.getStringExtra("MotaSP")
-        val bytes = Base64.decode(intent.getStringExtra("AnhSP"), Base64.DEFAULT)
-        val bitMap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-//        binding.rounded.setImageBitmap(bitMap)
+        dpRef = FirebaseDatabase.getInstance().getReference("sanpham")
+        val query = dpRef.orderByChild("id_SanPham").equalTo(intent.getStringExtra("idSP"))
+        var mota = ""
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (userSnapshot in snapshot.children) {
+                        val product = userSnapshot.getValue(Sanpham::class.java)
+                        if (product != null) {
+                            mota = product.motaSP!!
+                        }
+                    }
+                    binding.Tensp.text = intent.getStringExtra("TenSP")
+                    val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
+                    val formattedPrice = numberFormat.format(intent.getFloatExtra("GiaSP", 0f))
+                    binding.giasp.text = formattedPrice
+//        binding.mota.text = intent.getStringExtra("MotaSP")
+                    binding.mota.text = mota
+                    val bytes = Base64.decode(intent.getStringExtra("AnhSP"), Base64.DEFAULT)
+                    val bitMap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+
+                }
+
+
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
 
 
 

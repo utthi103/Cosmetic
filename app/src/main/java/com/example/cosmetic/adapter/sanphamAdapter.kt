@@ -1,5 +1,6 @@
 package com.example.cosmetic.adapter
 
+import android.R.string
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
@@ -12,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cosmetic.Login
 import com.example.cosmetic.Model.Sanpham
@@ -55,13 +57,13 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val cur = sanpham[position]
-        holder.tensanpham.setText(cur.TenSP.toString())
+        holder.tensanpham.setText(cur.tenSP.toString())
         holder.danhmuc.setText(cur.id_danhmuc.toString())
         val numberFormat = NumberFormat.getCurrencyInstance(Locale.US)
-        val formattedPrice = numberFormat.format(cur.GiaSP)
+        val formattedPrice = numberFormat.format(cur.giaSP)
         holder.giaSp.setText(formattedPrice)
         holder.sldaban.setText(cur.sl_daban.toString())
-        val bytes=Base64.decode(cur.AnhSP ,Base64.DEFAULT)
+        val bytes=Base64.decode(cur.anhSP ,Base64.DEFAULT)
         val bitMap = BitmapFactory.decodeByteArray(bytes,0,bytes.size)
         holder.image.setImageBitmap(bitMap)
 
@@ -71,8 +73,8 @@ class sanphamAdapter(private var sanpham: ArrayList<Sanpham>, private val contex
             val iduser = sharedPreferences.getString("iduser",null)
             if(iduser!=null){
                 val countProduct = countProduct(context)
-                val re = countProduct.addproduct(cur.id_SanPham.toString(), cur.TenSP.toString(),
-                    cur.GiaSP!!, cur.AnhSP.toString(), 1
+                val re = countProduct.addproduct(cur.id_SanPham.toString(), cur.tenSP.toString(),
+                    cur.giaSP!!, cur.anhSP.toString(), 1
                 )
             }else{
                 val builder = AlertDialog.Builder(context)

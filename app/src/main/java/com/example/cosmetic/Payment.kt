@@ -102,7 +102,7 @@ class Payment : AppCompatActivity() {
                                                 val daban = product?.sl_daban!!.toInt() + cartData.soluong!!.toInt()
                                                 dpDaban1.child("sl_daban").setValue(daban)
 
-                                                dpDaban1.child("soluongSP").setValue(product.SoluongSP?.minus(
+                                                dpDaban1.child("soluongSP").setValue(product.soluongSP?.minus(
                                                     cartData.soluong!!
                                                 ))
                                             }
@@ -127,7 +127,7 @@ class Payment : AppCompatActivity() {
                     val orderr = order(id_order,iduser,email.toString(),phone.toString(),address.toString(),
                         username.toString(),note.toString(),
                         total, countProduct
-                        ,date)
+                        ,date,"Pending Approval")
                     dpRef1.child(id_order).setValue(orderr)
                     val builder = AlertDialog.Builder(this@Payment)
                     builder.setTitle("Notification")

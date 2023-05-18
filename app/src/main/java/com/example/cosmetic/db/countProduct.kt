@@ -30,7 +30,7 @@ class countProduct(private val context: Context) {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val product = snapshot.getValue(Sanpham::class.java)
-                    val count = product?.SoluongSP ?: 0
+                    val count = product?.soluongSP ?: 0
                     onComplete(count)
                 } else {
                     onComplete(0)

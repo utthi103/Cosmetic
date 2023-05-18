@@ -160,7 +160,7 @@ class Fr_user : Fragment() {
         val builder = AlertDialog.Builder(context)
         builder.setTitle("Notification")
         builder.setMessage("Do you want to change your picture")
-        builder.setPositiveButton("Đồng ý") { dialog, which ->
+        builder.setPositiveButton("Agree") { dialog, which ->
 //        id user
             val sharedPreferences = context?.getSharedPreferences("my_preferences", Context.MODE_PRIVATE)
             val iduser = sharedPreferences?.getString("iduser",null)
@@ -177,10 +177,7 @@ class Fr_user : Fragment() {
 
 
         }
-        builder.setNegativeButton("Cancel") { dialog, which ->
-            dialog.dismiss()
 
-        }
         builder.show()
     }
 

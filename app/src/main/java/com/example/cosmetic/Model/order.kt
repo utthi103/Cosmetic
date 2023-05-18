@@ -11,5 +11,6 @@ class order(
     var total: String? = null,
     var countproduct:Int? = null,
     var date: String? = null,
+    var status:String?=null,
 ) {
 }
