@@ -131,7 +131,7 @@ class Payment : AppCompatActivity() {
                     dpRef1.child(id_order).setValue(orderr)
                     val builder = AlertDialog.Builder(this@Payment)
                     builder.setTitle("Notification")
-                    builder.setMessage("Order successful")
+                    builder.setMessage("Order successful. Waiting for accpect")
                     builder.setPositiveButton("Agree") { dialog, which ->
                 val intent = Intent(this@Payment, nav_bottom::class.java)
                         startActivity(intent)
